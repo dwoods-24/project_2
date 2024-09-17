@@ -1,36 +1,32 @@
 #include "volsort.h"
-
 #include <iostream>
 
+using namespace std;
+
 // Prototypes
-
-Node *msort(Node *head, bool numeric);
+Node *msort(Node *head, bool numeric, List &dummy);
 void split(Node *head, Node *&left, Node *&right);
-Node *merge(Node *left, Node *right, bool numeric);
-
-// Implementations
+Node *merge(Node *left, Node *right, bool numeric, List &dummy);
 
 void merge_sort(List &l, bool numeric) {
     if (l.head == nullptr || l.head->next == nullptr) {
-        return; // List is empty or has only one element
+        return;
     }
-    l.head = msort(l.head, numeric);
+    l.head = msort(l.head, numeric, l);
 }
 
-Node *msort(Node *head, bool numeric) {
+Node *msort(Node *head, bool numeric, List &dummy) {
     if (head == nullptr || head->next == nullptr) {
-        return head; // Base case: list is empty or has only one element
+        return head;
     }
 
     Node *left, *right;
     split(head, left, right);
 
-    // Recursively sort the sublists
-    left = msort(left, numeric);
-    right = msort(right, numeric);
+    left = msort(left, numeric, dummy);
+    right = msort(right, numeric, dummy);
 
-    // Merge the sorted sublists
-    return merge(left, right, numeric);
+    return merge(left, right, numeric, dummy);
 }
 
 void split(Node *head, Node *&left, Node *&right) {
@@ -50,16 +46,16 @@ void split(Node *head, Node *&left, Node *&right) {
     slow->next = nullptr;
 }
 
-Node *merge(Node *left, Node *right, bool numeric) {
-    Node temporaryNode; // Temporary node to simplify the merging process
+Node *merge(Node *left, Node *right, bool numeric, List &dummy) {
+    Node temporaryNode;
     Node *tail = &temporaryNode;
 
     while (left != nullptr && right != nullptr) {
         bool compareResult;
         if (numeric) {
-            compareResult = left->number <= right->number;
+            compareResult = dummy.node_number_compare(left, right);
         } else {
-            compareResult = left->str <= right->str;
+            compareResult = dummy.node_string_compare(left, right);
         }
 
         if (compareResult) {
@@ -72,7 +68,6 @@ Node *merge(Node *left, Node *right, bool numeric) {
         tail = tail->next;
     }
 
-    // Attach the remaining nodes
     tail->next = (left != nullptr) ? left : right;
 
     return temporaryNode.next;

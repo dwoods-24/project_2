@@ -1,59 +1,51 @@
-// stl.cpp
-
 #include "volsort.h"
 #include <algorithm>
-#include <iostream>
 #include <vector>
 
 using namespace std;
 
-// C++98 style comparison function for numeric sorting
-bool node_number_compare(const Node *a, const Node *b)
-{
-    return a->number < b->number;
-}
+// Wrapper functions for std::sort
+struct NodeNumberCompare {
+    bool operator()(const Node* a, const Node* b) const {
+        List dummy;
+        return dummy.node_number_compare(a, b);
+    }
+};
 
-// C++98 style comparison function for string sorting
-bool node_string_compare(const Node *a, const Node *b)
-{
-    return a->str < b->str;
-}
+struct NodeStringCompare {
+    bool operator()(const Node* a, const Node* b) const {
+        List dummy;
+        return dummy.node_string_compare(a, b);
+    }
+};
 
-// STL sort function implementation adhering to C++98
 void stl_sort(List &l, bool numeric)
 {
-    // Convert the linked list into a vector of Node pointers
     vector<Node *> arr;
     Node *n = l.head;
 
-    // Traverse the list and add each node to the vector
     while (n != nullptr)
     {
         arr.push_back(n);
         n = n->next;
     }
 
-    // Sort the vector based on the numeric flag
-    if (numeric)
+    if (!arr.empty())
     {
-        // Sort using number comparison
-        sort(arr.begin(), arr.end(), node_number_compare);
-    }
-    else
-    {
-        // Sort using string comparison
-        sort(arr.begin(), arr.end(), node_string_compare);
-    }
+        if (numeric)
+        {
+            sort(arr.begin(), arr.end(), NodeNumberCompare());
+        }
+        else
+        {
+            sort(arr.begin(), arr.end(), NodeStringCompare());
+        }
 
-    // Rebuild the linked list in the sorted order
-    for (size_t i = 0; i < arr.size() - 1; ++i)
-    {
-        arr[i]->next = arr[i + 1];
+        for (size_t i = 0; i < arr.size() - 1; ++i)
+        {
+            arr[i]->next = arr[i + 1];
+        }
+        arr.back()->next = nullptr;
+        l.head = arr.front();
     }
-
-    // Last element points to nullptr
-    arr.back()->next = nullptr;
-
-    // Update the head of the list
-    l.head = arr.front();
 }

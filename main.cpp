@@ -1,14 +1,6 @@
-/*
-Name: Dylan Woods
-Assignment: Project 2
-Date: 9/9/24
-Overview:
-*/
-
 #include "volsort.h"
 
 #include <iostream>
-
 #include <strings.h>
 #include <unistd.h>
 #include <cstdlib>
@@ -90,9 +82,9 @@ int main(int argc, char *argv[])
 
     while (std::getline(std::cin, line))
     {
-        // data.push_front(line);
+        data.push_front(line);
     }
-    /*
+
     switch (mode) {
         case MODE_STL:
             stl_sort(data, numeric);
@@ -106,8 +98,14 @@ int main(int argc, char *argv[])
         case MODE_QUICK:
             quick_sort(data, numeric);
             break;
+        case MODE_OBLIVIOUS:
+            // Oblivious sort not implemented
+            std::cerr << "Error: Oblivious sort not implemented" << std::endl;
+            return 1;
+        default:
+            std::cerr << "Error: Invalid sorting mode" << std::endl;
+            return 1;
     }
-    */
 
     for (Node *curr = data.head; curr != NULL; curr = curr->next)
     {

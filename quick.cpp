@@ -1,46 +1,44 @@
 #include "volsort.h"
-
 #include <iostream>
 
+using namespace std;
+
 // Prototypes
-
-// Node *qsort(Node *head, bool numeric) 
-// void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric);
-// Node *concatenate(Node *left, Node *right);
-
+Node *qsort(Node *head, bool numeric, List &dummy);
+void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy);
+Node *concatenate(Node *left, Node *right);
 
 void quick_sort(List &l, bool numeric) {
     if (l.head == nullptr || l.head->next == nullptr) {
-        // List is empty or has one element, no need to sort
         return;
     }
-    l.head = qsort(l.head, numeric);
+    l.head = qsort(l.head, numeric, l);
 }
 
-Node *qsort(Node *head, bool numeric) {
+Node *qsort(Node *head, bool numeric, List &dummy) {
     if (head == nullptr || head->next == nullptr) {
-        return head; // Base case: single node or empty list
+        return head;
     }
 
-    Node *pivot = head; // Choose the pivot (could be any node)
+    Node *pivot = head;
     Node *left = nullptr;
     Node *right = nullptr;
     
-    partition(head->next, pivot, left, right, numeric); // Partition the list
+    partition(head->next, pivot, left, right, numeric, dummy);
 
-    left = qsort(left, numeric); // Recursively sort the left sublist
-    right = qsort(right, numeric); // Recursively sort the right sublist
+    left = qsort(left, numeric, dummy);
+    right = qsort(right, numeric, dummy);
 
-    // Concatenate the sorted sublists with the pivot
-    return concatenate(left, concatenate(pivot, right));
+    pivot->next = right;
+    return concatenate(left, pivot);
 }
 
-void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric) {
+void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy) {
     Node *current = head;
     while (current != nullptr) {
         Node *next = current->next;
-        if ((numeric && current->number < pivot->number) || 
-            (!numeric && current->number < pivot->number)) {
+        if ((numeric && dummy.node_number_compare(current, pivot)) || 
+            (!numeric && dummy.node_string_compare(current, pivot))) {
             current->next = left;
             left = current;
         } else {
@@ -48,21 +46,6 @@ void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric)
             right = current;
         }
         current = next;
-    }
-    // Ensure the end of the lists are terminated
-    if (left != nullptr) {
-        Node *temp = left;
-        while (temp->next != nullptr) {
-            temp = temp->next;
-        }
-        temp->next = nullptr;
-    }
-    if (right != nullptr) {
-        Node *temp = right;
-        while (temp->next != nullptr) {
-            temp = temp->next;
-        }
-        temp->next = nullptr;
     }
 }
 
@@ -75,4 +58,3 @@ Node *concatenate(Node *left, Node *right) {
     temp->next = right;
     return left;
 }
-

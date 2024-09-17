@@ -4,41 +4,34 @@
 
 using namespace std;
 
-List::List() : size(0), head(nullptr) // Constructor
-{};
+List::List() : size(0), head(nullptr) {}
 
-List::~List() // Destructor
+List::~List()
 {
-    delete this;
+    Node* current = head;
+    while (current != nullptr) {
+        Node* next = current->next;
+        delete current;
+        current = next;
+    }
 }
 
-//---Functions------------------------------------------------
-void List::push_front(const string &s) // define below
+void List::push_front(const string &s)
 {
     Node *newNode = new Node();
     newNode->next = head;
     newNode->str = s;
-    newNode->number = stoi(s);
-};
-bool node_number_compare(const Node *a, const Node *b)
+    newNode->number = atoi(s.c_str()); // Use atoi instead of stoi for C++98
+    head = newNode; // Set the new node as the head
+    size++; // Increment the size
+}
+
+bool List::node_number_compare(const Node *a, const Node *b)
 {
-    if (a->number == a->number)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-};
-bool node_string_compare(const Node *a, const Node *b)
+    return a->number < b->number;
+}
+
+bool List::node_string_compare(const Node *a, const Node *b)
 {
-    if (a->str == a->str)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-};
+    return a->str < b->str;
+}
