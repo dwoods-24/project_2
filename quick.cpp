@@ -1,5 +1,3 @@
-// quick.cpp
-
 #include "volsort.h"
 
 #include <iostream>
@@ -10,7 +8,6 @@
 // void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric);
 // Node *concatenate(Node *left, Node *right);
 
-// Implementations
 
 void quick_sort(List &l, bool numeric) {
     if (l.head == nullptr || l.head->next == nullptr) {
@@ -42,8 +39,8 @@ void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric)
     Node *current = head;
     while (current != nullptr) {
         Node *next = current->next;
-        if ((numeric && current->value < pivot->value) || 
-            (!numeric && current->value < pivot->value)) {
+        if ((numeric && current->number < pivot->number) || 
+            (!numeric && current->number < pivot->number)) {
             current->next = left;
             left = current;
         } else {
