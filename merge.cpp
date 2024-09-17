@@ -1,19 +1,12 @@
 #include "volsort.h"
-#include<iostream>
+
+#include <iostream>
+
 // Prototypes
 
 Node *msort(Node *head, bool numeric);
 void split(Node *head, Node *&left, Node *&right);
 Node *merge(Node *left, Node *right, bool numeric);
-
-// Static comparison functions
-static bool compare_nodes(const Node *a, const Node *b, bool numeric) {
-    if (numeric) {
-        return a->number < b->number;
-    } else {
-        return a->str < b->str;
-    }
-}
 
 // Implementations
 
@@ -58,11 +51,18 @@ void split(Node *head, Node *&left, Node *&right) {
 }
 
 Node *merge(Node *left, Node *right, bool numeric) {
-    Node empty; // Dummy node to simplify the merging process
-    Node *tail = &empty;
+    Node temporaryNode; // Temporary node to simplify the merging process
+    Node *tail = &temporaryNode;
 
     while (left != nullptr && right != nullptr) {
-        if (compare_nodes(left, right, numeric)) {
+        bool compareResult;
+        if (numeric) {
+            compareResult = left->number <= right->number;
+        } else {
+            compareResult = left->str <= right->str;
+        }
+
+        if (compareResult) {
             tail->next = left;
             left = left->next;
         } else {
@@ -75,5 +75,5 @@ Node *merge(Node *left, Node *right, bool numeric) {
     // Attach the remaining nodes
     tail->next = (left != nullptr) ? left : right;
 
-    return empty.next;
+    return temporaryNode.next;
 }
