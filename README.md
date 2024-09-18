@@ -4,12 +4,7 @@
 # Net ID: dwoods24, atoms, jbrow327
 # Project Description:
 This project creates a C++ sorting tool called volsort which uses a linked
-list to store the data. It supports different sorting methods:\n
-1.STL \n
-2.Qsort \n
-3.Merge \n
-4.Quick \n
-It sorts either numbers or strings.
+list to store the data. It sorts either numbers or strings and supports different sorting methods: STL, Qsort, Merge, and Quick
 
 ## Benchmark Results:
 
