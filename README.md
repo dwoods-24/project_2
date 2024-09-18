@@ -4,11 +4,12 @@
 # Net ID: dwoods24, atoms, jbrow327
 # Project Description:
 This project creates a C++ sorting tool called volsort which uses a linked
-list to store the data. It supports different sorting methods: 
-1.STL
-2.Qsort
-3.Merge
-4.Quick
+list to store the data. It supports different sorting methods:\n
+1.STL \n
+2.Qsort \n
+3.Merge \n
+4.Quick \n
+It sorts either numbers or strings.
 
 ## Benchmark Results:
 
@@ -55,8 +56,8 @@ Even though all the sorting methods have a time complexity of O(n log n), the ac
 Overall, qsort seems to be the best sorting method. While STL and custom sorts might be useful in certain situations, qsort is the best choice for general-purpose sorting because of its speed and simplicity. It strikes a good balance between performance and ease of implementation, making it a great option for large datasets.
 
 ## Group Dynamics and Contributions:
-- **Dylan Woods** contributed significantly to the implementation of the custom quicksort algorithm and worked on the debugging process.
+- **Dylan Woods**: I contributed to the implementation of the qsort and stl sort algorithms. Additionally, I implemented the benchmarking script and worked on the debugging process.
 - **Jakob Brown**: I wrote and implemented Merge Sort, helped with structure and formatting, and helped with STL sort, Q sort, and benchmarking
-- **Anthony Toms** was responsible for integrating the STL and qsort sorting modes 
+- **Anthony Toms**: was responsible for integrating the STL and qsort sorting modes 
 
 
