@@ -4,21 +4,6 @@
 
 using namespace std;
 
-// Wrapper functions for std::sort
-struct NodeNumberCompare {
-    bool operator()(const Node* a, const Node* b) const {
-        List dummy;
-        return dummy.node_number_compare(a, b);
-    }
-};
-
-struct NodeStringCompare {
-    bool operator()(const Node* a, const Node* b) const {
-        List dummy;
-        return dummy.node_string_compare(a, b);
-    }
-};
-
 void stl_sort(List &l, bool numeric)
 {
     vector<Node *> arr;
@@ -34,14 +19,14 @@ void stl_sort(List &l, bool numeric)
     {
         if (numeric)
         {
-            sort(arr.begin(), arr.end(), NodeNumberCompare());
+            sort(arr.begin(), arr.end(), node_number_compare);
         }
         else
         {
-            sort(arr.begin(), arr.end(), NodeStringCompare());
+            sort(arr.begin(), arr.end(), node_string_compare);
         }
 
-        for (size_t i = 0; i < arr.size() - 1; ++i)
+        for (int i = 0; i < arr.size() - 1; ++i)
         {
             arr[i]->next = arr[i + 1];
         }

@@ -1,55 +1,65 @@
+// qsort.cpp
+
 #include "volsort.h"
 #include <cstdlib>
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include <functional>
 
-using namespace std;
-
-// Wrapper functions for qsort
-int node_number_compare_wrapper(const void *a, const void *b)
+int compare(const void *a, const void *b)
 {
-    const Node *nodeA = *(const Node **)a;
-    const Node *nodeB = *(const Node **)b;
-    List dummy; // Dummy list to access the comparison function
-    return dummy.node_number_compare(nodeA, nodeB) ? -1 : 1;
-}
+    int *intA = (int *)a;
+    int *intB = (int *)b;
 
-int node_string_compare_wrapper(const void *a, const void *b)
-{
-    const Node *nodeA = *(const Node **)a;
-    const Node *nodeB = *(const Node **)b;
-    List dummy; // Dummy list to access the comparison function
-    return dummy.node_string_compare(nodeA, nodeB) ? -1 : 1;
+    if (*intA < *intB)
+    {
+        return -1; // a is less than b
+    }
+    else if (*intA > *intB)
+    {
+        return 1; // a is greater than b
+    }
+    else
+    {
+        return 0; // a is equal to b
+    }
 }
 
 void qsort_sort(List &l, bool numeric)
 {
+    // Convert the linked list into a vector of Node pointers
     vector<Node *> arr;
     Node *n = l.head;
 
-    while (n != nullptr)
+    // Traverse the list and add each node to the vector
+    while (n != NULL) // Use NULL instead of nullptr for C++98 compatibility
     {
         arr.push_back(n);
         n = n->next;
     }
 
-    if (!arr.empty())
+    // Sort the vector using qsort
+    if (numeric)
     {
-        if (numeric)
-        {
-            qsort(&arr[0], arr.size(), sizeof(Node *), node_number_compare_wrapper);
-        }
-        else
-        {
-            qsort(&arr[0], arr.size(), sizeof(Node *), node_string_compare_wrapper);
-        }
-
-        for (size_t i = 0; i < arr.size() - 1; ++i)
-        {
-            arr[i]->next = arr[i + 1];
-        }
-        arr.back()->next = nullptr;
-        l.head = arr.front();
+        // Sort using number comparison
+        qsort(arr.data(), arr.size(), sizeof(Node *), compare);
     }
+    else
+    {
+        // Sort using string comparison
+        qsort(arr.data(), arr.size(), sizeof(Node *), compare);
+    }
+
+    // Rebuild the linked list in the sorted order
+    for (size_t i = 0; i < arr.size() - 1; ++i)
+    {
+        arr[i]->next = arr[i + 1];
+    }
+
+    // Last element points to NULL
+    arr.back()->next = NULL;
+
+    // Update the head of the list
+    l.head = arr.front();
 }

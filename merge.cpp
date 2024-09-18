@@ -8,15 +8,19 @@ Node *msort(Node *head, bool numeric, List &dummy);
 void split(Node *head, Node *&left, Node *&right);
 Node *merge(Node *left, Node *right, bool numeric, List &dummy);
 
-void merge_sort(List &l, bool numeric) {
-    if (l.head == nullptr || l.head->next == nullptr) {
+void merge_sort(List &l, bool numeric)
+{
+    if (l.head == nullptr || l.head->next == nullptr)
+    {
         return;
     }
     l.head = msort(l.head, numeric, l);
 }
 
-Node *msort(Node *head, bool numeric, List &dummy) {
-    if (head == nullptr || head->next == nullptr) {
+Node *msort(Node *head, bool numeric, List &dummy)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
         return head;
     }
 
@@ -29,13 +33,16 @@ Node *msort(Node *head, bool numeric, List &dummy) {
     return merge(left, right, numeric, dummy);
 }
 
-void split(Node *head, Node *&left, Node *&right) {
+void split(Node *head, Node *&left, Node *&right)
+{
     Node *slow = head;
     Node *fast = head->next;
 
-    while (fast != nullptr) {
+    while (fast != nullptr)
+    {
         fast = fast->next;
-        if (fast != nullptr) {
+        if (fast != nullptr)
+        {
             slow = slow->next;
             fast = fast->next;
         }
@@ -46,22 +53,30 @@ void split(Node *head, Node *&left, Node *&right) {
     slow->next = nullptr;
 }
 
-Node *merge(Node *left, Node *right, bool numeric, List &dummy) {
+Node *merge(Node *left, Node *right, bool numeric, List &dummy)
+{
     Node temporaryNode;
     Node *tail = &temporaryNode;
 
-    while (left != nullptr && right != nullptr) {
+    while (left != nullptr && right != nullptr)
+    {
         bool compareResult;
-        if (numeric) {
-            compareResult = dummy.node_number_compare(left, right);
-        } else {
-            compareResult = dummy.node_string_compare(left, right);
+        if (numeric)
+        {
+            compareResult = node_number_compare(left, right);
+        }
+        else
+        {
+            compareResult = node_string_compare(left, right);
         }
 
-        if (compareResult) {
+        if (compareResult)
+        {
             tail->next = left;
             left = left->next;
-        } else {
+        }
+        else
+        {
             tail->next = right;
             right = right->next;
         }

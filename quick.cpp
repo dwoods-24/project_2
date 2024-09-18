@@ -8,22 +8,26 @@ Node *qsort(Node *head, bool numeric, List &dummy);
 void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy);
 Node *concatenate(Node *left, Node *right);
 
-void quick_sort(List &l, bool numeric) {
-    if (l.head == nullptr || l.head->next == nullptr) {
+void quick_sort(List &l, bool numeric)
+{
+    if (l.head == nullptr || l.head->next == nullptr)
+    {
         return;
     }
     l.head = qsort(l.head, numeric, l);
 }
 
-Node *qsort(Node *head, bool numeric, List &dummy) {
-    if (head == nullptr || head->next == nullptr) {
+Node *qsort(Node *head, bool numeric, List &dummy)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
         return head;
     }
 
     Node *pivot = head;
     Node *left = nullptr;
     Node *right = nullptr;
-    
+
     partition(head->next, pivot, left, right, numeric, dummy);
 
     left = qsort(left, numeric, dummy);
@@ -33,15 +37,20 @@ Node *qsort(Node *head, bool numeric, List &dummy) {
     return concatenate(left, pivot);
 }
 
-void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy) {
+void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy)
+{
     Node *current = head;
-    while (current != nullptr) {
+    while (current != nullptr)
+    {
         Node *next = current->next;
-        if ((numeric && dummy.node_number_compare(current, pivot)) || 
-            (!numeric && dummy.node_string_compare(current, pivot))) {
+        if ((numeric && node_number_compare(current, pivot)) ||
+            (!numeric && node_string_compare(current, pivot)))
+        {
             current->next = left;
             left = current;
-        } else {
+        }
+        else
+        {
             current->next = right;
             right = current;
         }
@@ -49,10 +58,13 @@ void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric,
     }
 }
 
-Node *concatenate(Node *left, Node *right) {
-    if (left == nullptr) return right;
+Node *concatenate(Node *left, Node *right)
+{
+    if (left == nullptr)
+        return right;
     Node *temp = left;
-    while (temp->next != nullptr) {
+    while (temp->next != nullptr)
+    {
         temp = temp->next;
     }
     temp->next = right;
