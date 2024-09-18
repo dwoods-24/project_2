@@ -52,7 +52,7 @@ Overall, qsort seems to be the best sorting method. While STL and custom sorts m
 
 ## Group Dynamics and Contributions:
 - **Dylan Woods**: I contributed to the implementation of the qsort and stl sort algorithms. Additionally, I implemented the benchmarking script and worked on the debugging process.
-- **Jakob Brown**: I wrote and implemented Merge Sort, helped with structure and formatting, and helped with STL sort, Q sort, and benchmarking
+- **Jakob Brown**: I wrote and implemented Merge Sort, helped with structure and formatting, and helped with STL sort, and Qsort
 - **Anthony Toms**: was responsible for integrating the STL and qsort sorting modes 
 
 
