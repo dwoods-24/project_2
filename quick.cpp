@@ -4,8 +4,8 @@
 using namespace std;
 
 // Prototypes
-Node *qsort(Node *head, bool numeric, List &dummy);
-void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy);
+Node *qsort(Node *head, bool numeric);
+void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric);
 Node *concatenate(Node *left, Node *right);
 
 void quick_sort(List &l, bool numeric)
@@ -14,10 +14,10 @@ void quick_sort(List &l, bool numeric)
     {
         return;
     }
-    l.head = qsort(l.head, numeric, l);
+    l.head = qsort(l.head, numeric);
 }
 
-Node *qsort(Node *head, bool numeric, List &dummy)
+Node *qsort(Node *head, bool numeric)
 {
     if (head == nullptr || head->next == nullptr)
     {
@@ -28,16 +28,16 @@ Node *qsort(Node *head, bool numeric, List &dummy)
     Node *left = nullptr;
     Node *right = nullptr;
 
-    partition(head->next, pivot, left, right, numeric, dummy);
+    partition(head->next, pivot, left, right, numeric);
 
-    left = qsort(left, numeric, dummy);
-    right = qsort(right, numeric, dummy);
+    left = qsort(left, numeric);
+    right = qsort(right, numeric);
 
     pivot->next = right;
     return concatenate(left, pivot);
 }
 
-void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric, List &dummy)
+void partition(Node *head, Node *pivot, Node *&left, Node *&right, bool numeric)
 {
     Node *current = head;
     while (current != nullptr)
